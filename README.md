@@ -97,8 +97,76 @@ This document outlines the final production readiness checklist for QubeBridge, 
 
 ---
 
+# QubeBridge FAQ
 
-© 2025 Mabble Protocol. All rights reserved.
+## 🌉 General Questions
+
+### **1. What is QubeBridge?**
+QubeBridge is a **private, secure cross-chain bridge** operated exclusively by **Mabble Protocol** for **QubeSwap DEX** users. It enables:
+- **Seamless asset transfers** between supported blockchains
+- **Off-chain validation** via a backend processor
+- **Multisig-controlled admin operations** for security
+- **Chainlink Automation support** for supported chains
+
+<br><br>
+### **2. Who can use QubeBridge?**
+- **QubeSwap users**: To bridge assets between supported chains
+- **Admins**:
+  - **Controller**: Manages daily operations (adding tokens/chains, fees)
+  - **Processor**: Validates transactions
+  - **Multisig**: Handles emergency operations
 
 
+### **3. What chains/networks are supported?**
+- The bridge is deployed on a **source chain** (`srcChainId`)
+- Additional chains can be added by the **controller**
+- Check supported chains with:
+  ```solidity
+  function getSupportedChainIds() external view returns (uint256[] memory)
+  ```
+
+<br><br>
+### **4. What tokens are supported?**
+
+- **Native ETH (use address(0))**
+
+- **ERC20 tokens (up to 100 by default)** <br>
+	- Mintable tokens (burn/mint instead of transferring) <br>
+	**Check support with:** <br>
+```solidity
+function isSupportedToken(address token) public
+```
+
+<br><br>
+### **5. What are the fees?**
+
+- **Default fee:** 2% (configurable up to 5%)
+
+- **Example:** Bridging 100 USDC → 2 USDC fee (sent to feeRecipient)
+
+- **Minimum amount:** Enforced per token (e.g., minAmount[token])
+
+<br><br>
+### **6. What's the difference between mintable and non-mintable tokens?**
+
+**Type**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Mechanism**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Liquidity Needed?** <br>
+Mintable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Burn on source, mint on destination&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;❌ No	  <br>
+Non-mintable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lock in bridge, transfer from pool&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✅ Yes <br>
+
+
+<br><br>
+### **7. What's the liquidity pool for?**
+
+#### **Bridge:**
+- **Holds non-mintable tokens (e.g., USDC, DAI) for bridging**
+
+#### **Management:**
+- **Deposit:** depositLiquidity(token, amount) (controller/multisig)
+- **Withdraw:** withdrawLiquidity(token, amount) (emergency only)
+
+
+
+
+<br><br>
+© 2025 Mabble Protocol. All rights reserved. <br>
 QubeBridge is a private bridge operated by Mabble Protocol exclusively for QubeSwap Dex.
