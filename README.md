@@ -48,7 +48,7 @@ function supportsInterface(bytes4 interfaceId) public view virtual override retu
 
 # QubeBridge: Production Readiness Checklist
 
-![QubeBridge Logo](https://via.placeholder.com/150) <!-- Replace with actual logo -->
+![QubeBridge Logo](https://github.com/mabbleio/qube-bridge-frontend/blob/main/public/Logo.png) <!-- Replace with actual logo -->
 
 **Secure Cross-Chain Bridge for QubeSwap**
 
