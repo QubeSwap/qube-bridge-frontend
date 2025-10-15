@@ -30,6 +30,7 @@ export const ETHEREUM_BRIDGE_CONTRACT = "0xa5ee6bf543d032e0cb4da2057ef0b40941eae
 export const BNB_ChainId = 56 // 97;
 export const BASE_ChainId = 8453 //84532;
 export const ETHEREUM_ChainId = 1 // 11155111;
+export const QUBETICS_ChainId = 9030 // 9029;
 
 export const CHAIN_LIST = [
   {
@@ -43,6 +44,10 @@ export const CHAIN_LIST = [
   {
     chain: "BNB",
     id: 56
+  },
+  {
+    chain: "QUBETICS",
+    id: 9029
   }
 ]
 
