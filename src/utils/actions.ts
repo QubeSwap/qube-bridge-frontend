@@ -3,7 +3,21 @@ import { config } from '../config/wagmi';
 import { Address, parseUnits } from 'viem';
 import { waitForTransactionReceipt } from 'wagmi/actions';
 import { toast } from 'react-toastify';
-import { BNB_BRIDGE_CONTRACT, BNB_USDCAddress, BNB_ChainId, BASE_ChainId, ETHEREUM_ChainId, ETHEREUM_BRIDGE_CONTRACT, BASE_BRIDGE_CONTRACT, Ether_USDCAddress, Base_USDCAddress } from '@/constants';
+import { BNB_ChainId, 
+		 BASE_ChainId, 
+		 ETHEREUM_ChainId,  
+		 QUBETICS_ChainId } from '@/constants';
+
+import { BNB_BRIDGE_CONTRACT, 
+		 ETHEREUM_BRIDGE_CONTRACT, 
+		 BASE_BRIDGE_CONTRACT,  
+		 QUBETICS_BRIDGE_CONTRACT } from '@/constants';
+
+import { BNB_USDCAddress, 
+		 Ether_USDCAddress, 
+		 Base_USDCAddress,
+		 Qubetics_USDCAddress } from '@/constants';		 
+
 import bridgeContractAbi from '@/abis/bridgeContract.json';
 
 export interface IVolume {
@@ -15,15 +29,15 @@ export const approveAndBridge = async (
   tokenAddress: string,
   amount: any,
   receiver: Address,
-  sendChainId: number,
-  destinationChainId: number,
+  srcChainId: number,
+  destChainId: number,
   onProgress?: (step: number) => void
 ) => {
   try {
     console.log("tokenAddress ==> ", tokenAddress)
     console.log("reciever ==> ", receiver)
     console.log("amount ==> ", amount)
-    console.log("chianId ==> ", sendChainId)
+    console.log("chianId ==> ", srcChainId)
 
     if (amount == 0) {
       return toast.warning("invalid amount")
@@ -31,31 +45,35 @@ export const approveAndBridge = async (
     let BridgeContractAddress: Address | undefined;
     // let ApproveUsdcAddress: Address | undefined;
 
-    if (sendChainId == BNB_ChainId) {
+    if (srcChainId == BNB_ChainId) {
       console.log("BSC contract selected ===")
       BridgeContractAddress = BNB_BRIDGE_CONTRACT
     }
-    else if (sendChainId == BASE_ChainId) {
+    else if (srcChainId == BASE_ChainId) {
       console.log("base contract selected ====")
       BridgeContractAddress = BASE_BRIDGE_CONTRACT
     }
-    else if (sendChainId == ETHEREUM_ChainId) {
+    else if (srcChainId == ETHEREUM_ChainId) {
       console.log("ether contract selected ====")
       BridgeContractAddress = ETHEREUM_BRIDGE_CONTRACT
     }
+	else if (srcChainId == QUBETICS_ChainId) {
+      console.log("qubetics contract selected ====")
+      BridgeContractAddress = QUBETICS_BRIDGE_CONTRACT
+    }
 
     if (!BridgeContractAddress) {
-      throw new Error("Unsupported sendChainId: missing Bridge contract address");
+      throw new Error("Unsupported srcChainId: missing Bridge contract address");
     }
 
     // TODO: Check if user is whitelisted (currently not implemented in frontend)
-    const isWhitelisted = false; // Placeholder, always charges fee
+    //const isWhitelisted = false; // Placeholder, always charges fee
     const feePercent = 100; // 1% (should fetch from contract in production)
     let feeAmount;
-    if (!isWhitelisted) {
-      feeAmount = (BigInt(amount) * BigInt(feePercent)) / BigInt(10000);
-    }
-    const totalAmount = BigInt(amount); // Only approve the bridge amount, contract will take fee internally
+    //if (!isWhitelisted) {
+    feeAmount = (BigInt(amount) * BigInt(feePercent)) / BigInt(10000);
+    //}
+    const totalAmount = BigInt(amount) + feeAmount; // Only approve the bridge amount, contract will take fee internally
 
     // Step 1: Approve token for bridge contract
     if (onProgress) onProgress(1);
@@ -95,7 +113,7 @@ export const approveAndBridge = async (
         abi: bridgeContractAbi,
         functionName: "bridge",
         address: BridgeContractAddress as Address,
-        args: [tokenAddress as Address, receiver, amount, BigInt(Number(destinationChainId))]
+        args: [tokenAddress as Address, receiver, amount, BigInt(Number(destChainId))]
       }).then(async (hash) => {
         console.log("Bridge Tx:", hash);
         toast.warning('Please wait');
