@@ -7,8 +7,8 @@ import { useAccount, useChainId, useConfig } from "wagmi";
 import { Address } from "viem";
 import { useAppContext } from "@/context/AppContext";
 import InputSkeleton from "./InputSkeleton";
-import { BNB_ChainId, BASE_ChainId, ETHEREUM_ChainId, BNB_tokenAddress, Ether_tokenAddress, Base_tokenAddress } from '@/constants';
 import { get_erc20_abi } from '@/utils';
+import { BNB_ChainId, BASE_ChainId, ETHEREUM_ChainId, BNB_tokenAddress, Ether_tokenAddress, Base_tokenAddress } from '@/constants';
 
 interface SwapSideProps {
   className?: string;
