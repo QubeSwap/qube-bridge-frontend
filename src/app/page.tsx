@@ -7,7 +7,7 @@ function Page() {
   const router = useRouter();
 
   useEffect(()=>{
-    router.push("/main")
+    router.push("/USDT")
      },[router])
 
   return (
