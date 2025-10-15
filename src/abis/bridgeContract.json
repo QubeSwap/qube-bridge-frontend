@@ -193,7 +193,7 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "destinationChainId",
+				"name": "destChainId",
 				"type": "uint256"
 			}
 		],

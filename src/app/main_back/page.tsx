@@ -130,9 +130,18 @@ export default function Page() {
           </div>
         )}
 
-        <div className="flex justify-center gap-2 px-8">
-          <div className="rounded flex justify-center items-center text-3xl font-bold hover:cursor-pointer text-green-200">
-            Chain Bridge
+        <div className="flex justify-center gap-10 px-8">
+          <div className="rounded flex justify-center items-center text-2xl font-bold hover:cursor-pointer text-blue-200">
+            USDT
+          </div>
+		  <div className="rounded flex justify-center items-center text-2xl font-bold hover:cursor-pointer text-blue-200">
+            USDC
+          </div>
+		  <div className="rounded flex justify-center items-center text-2xl font-bold hover:cursor-pointer text-blue-200">
+            PYUSD
+          </div>
+		  <div className="rounded flex justify-center items-center text-2xl font-bold hover:cursor-pointer text-blue-200">
+            QST
           </div>
         </div>
         <div className="mt-[10px] flex flex-col relative">

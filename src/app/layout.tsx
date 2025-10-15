@@ -15,8 +15,8 @@ const TopBarDynamic = dynamic(() => import('@/components/layout/TopBar'), { ssr:
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "NODE_AI Bridge",
-  description: "Welcome to our Bridge site",
+  title: "Qube Bridge",
+  description: "QubeSwap | Bridge",
 };
 
 function RootLayout({ children }: { children: React.ReactNode }) {
