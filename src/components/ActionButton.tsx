@@ -64,7 +64,7 @@ export default function ConnectWalletButton({
     else if (reciever === 2) toChainId = BNB_ChainId;
 
     if (!tokenAddress) {
-      throw new Error("Unsupported sendChainId: missing Bridge contract address");
+      throw new Error("Unsupported srcChainId: missing Bridge contract address");
     }
     try {
       await approveAndBridge(
