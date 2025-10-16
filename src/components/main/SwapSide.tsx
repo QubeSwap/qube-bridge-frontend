@@ -1,26 +1,29 @@
+//SwapSide.tsx
 'use client';
 
 import { useEffect, useState } from "react";
 import TokenSelect from "./TokenSelect";
 import { useAccount, useChainId, useConfig } from "wagmi";
-import { Address } from "viem";
 import { useAppContext } from "@/context/AppContext";
 import InputSkeleton from "./InputSkeleton";
 import { get_erc20_abi } from '@/utils';
-import { approveAndBridge } from '@/utils/actions';
 
 // Import Viem utilities
-import { parseUnits, formatUnits } from "viem";
+import { Address, parseUnits, formatUnits } from "viem";
 
-import { BNB_ChainId,
-		 BASE_ChainId,
-		 ETHEREUM_ChainId,
-		 QUBETICS_ChainId } from '@/constants';
+import {
+  BNB_ChainId,
+  BASE_ChainId,
+  ETHEREUM_ChainId,
+  QUBETICS_ChainId
+} from '@/constants';
 
-import { BNB_tokenAddress,
-		 Ether_tokenAddress,
-		 Base_tokenAddress,
-		 Qubetics_tokenAddress } from '@/constants';
+import {
+  BNB_tokenAddress,
+  Ether_tokenAddress,
+  Base_tokenAddress,
+  Qubetics_tokenAddress
+} from '@/constants';
 
 interface SwapSideProps {
   className?: string;
@@ -74,7 +77,6 @@ export default function SwapSide({ className = "", disabled = false, chain = 0, 
 
     try {
 	  const bigIntAmount = parseUnits(value, TOKEN_DECIMALS);	
-      //const bigIntAmount = BigInt(value);
 	  
       const feeAmount = (bigIntAmount * FEE_PERCENT) / SCALE;
 	  
@@ -132,7 +134,7 @@ export default function SwapSide({ className = "", disabled = false, chain = 0, 
             <input
               className={`bg-transparent w-full text-right focus:outline-0 font-bold pr-2 text-2xl px-3 h-12 z-20 ${isWarning || !isAbleSwap ? "text-red-400" : "text-white"}`}
               value={amount ? amount : ""}
-              placeholder="0"
+              placeholder="0.00"
               type="number"
               disabled={disabled}
               onChange={handleAmountChange}
