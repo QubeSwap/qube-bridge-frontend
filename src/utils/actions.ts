@@ -35,7 +35,7 @@ export const approveAndBridge = async (
 ) => {
   try {
     console.log("tokenAddress ==> ", tokenAddress)
-    console.log("reciever ==> ", receiver)
+    console.log("receiver ==> ", receiver)
     console.log("amount ==> ", amount)
     console.log("chianId ==> ", srcChainId)
 
@@ -66,13 +66,11 @@ export const approveAndBridge = async (
       throw new Error("Unsupported srcChainId: missing Bridge contract address");
     }
 
-    // TODO: Check if user is whitelisted (currently not implemented in frontend)
-    //const isWhitelisted = false; // Placeholder, always charges fee
+    
     const feePercent = 100; // 1% (should fetch from contract in production)
     let feeAmount;
-    //if (!isWhitelisted) {
     feeAmount = (BigInt(amount) * BigInt(feePercent)) / BigInt(10000);
-    //}
+	//
     const totalAmount = BigInt(amount) + feeAmount; // Only approve the bridge amount, contract will take fee internally
 
     // Step 1: Approve token for bridge contract
