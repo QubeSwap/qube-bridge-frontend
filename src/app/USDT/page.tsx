@@ -47,8 +47,14 @@ export default function Page() {
         setBalance(0);
         return;
       }
-      const chainIndexToChainId = [ETHEREUM_ChainId, BASE_ChainId, BNB_ChainId];
-      const chainIndexToTokenAddress = [Ether_tokenAddress, Base_tokenAddress, BNB_tokenAddress];
+      const chainIndexToChainId = [ETHEREUM_ChainId, 
+								   BASE_ChainId,
+								   BNB_ChainId,
+								   QUBETICS_ChainId];
+      const chainIndexToTokenAddress = [Ether_tokenAddress, 
+										Base_tokenAddress,
+										BNB_tokenAddress,
+										Tics_tokenAddress];
       const selectedChainId = chainIndexToChainId[baseChain];
       const tokenAddress = chainIndexToTokenAddress[baseChain];
       const abi = get_erc20_abi();

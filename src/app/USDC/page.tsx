@@ -11,6 +11,7 @@ import { ADMIN_WALLET_ADDRESS, CHAIN_LIST } from "@/constants"
 import { useAccount, useChainId, useConfig } from "wagmi";
 import { Address } from "viem";
 import { get_erc20_abi } from '@/utils';
+
 import { BNB_ChainId, BASE_ChainId, ETHEREUM_ChainId, BNB_tokenAddress, Ether_tokenAddress, Base_tokenAddress } from '@/constants';
 
 export default function Page() {
@@ -152,7 +153,7 @@ export default function Page() {
           <SwapSide className="mt-5" disabled setChain={setQuoteChain} chain={quoteChain} opChain={baseChain} amount={quoteAmount} setAmount={setQuoteAmount} />
         </div>
         <div className="mt-4" >
-          <ActionButton swap={swap} sender={baseChain} reciever={quoteChain} amount={baseAmount} balance={balance} onBridgeFinished={() => setBaseAmount(0)} />
+          <ActionButton swap={swap} sender={baseChain} receiver={quoteChain} amount={baseAmount} balance={balance} onBridgeFinished={() => setBaseAmount(0)} />
         </div>
       </div>
     </div>
