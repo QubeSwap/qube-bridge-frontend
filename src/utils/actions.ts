@@ -218,6 +218,8 @@ function getContractAddress(chainId: number): string | null {
       return BASE_BRIDGE_CONTRACT;
     case ETHEREUM_ChainId:
       return ETHEREUM_BRIDGE_CONTRACT;
+	case QUBETICS_ChainId:
+      return QUBETICS_BRIDGE_CONTRACT;
     default:
       return null;
   }
