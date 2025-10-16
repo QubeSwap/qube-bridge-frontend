@@ -47,7 +47,7 @@ export const CHAIN_LIST = [
   },
   {
     chain: "QUBETICS",
-    id: 9029
+    id: 90230
   }
 ]
 
