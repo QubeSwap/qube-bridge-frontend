@@ -4,7 +4,16 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useChainId, useConfig, useWalletClient } from 'wagmi';
 import { cronos, cronosTestnet } from 'viem/chains';
 import { approveAndBridge } from '@/utils/actions';
-import { BNB_ChainId, BNB_tokenAddress, ETHEREUM_ChainId, BASE_ChainId, Ether_tokenAddress, Base_tokenAddress } from '@/constants';
+import { BNB_ChainId,  
+		 ETHEREUM_ChainId, 
+		 BASE_ChainId, 
+		 QUBETICS_ChainId } from '@/constants';
+
+import { BNB_tokenAddress,  
+		 Ether_tokenAddress,
+		 Base_tokenAddress,		 
+		 Qubetics_tokenAddress } from '@/constants';		 
+
 import { Address, parseUnits } from 'viem';
 import { useState } from 'react';
 
@@ -58,10 +67,15 @@ export default function ConnectWalletButton({
       fromChainId = BNB_ChainId;
       tokenAddress = BNB_tokenAddress
     }
+	else if (sender === 3) {
+      fromChainId = QUBETICS_ChainId;
+      tokenAddress = Qubetics_tokenAddress
+    }
 
     if (reciever === 0) toChainId = ETHEREUM_ChainId;
     else if (reciever === 1) toChainId = BASE_ChainId;
     else if (reciever === 2) toChainId = BNB_ChainId;
+	else if (reciever === 3) toChainId = QUBETICS_ChainId;
 
     if (!tokenAddress) {
       throw new Error("Unsupported srcChainId: missing Bridge contract address");
@@ -94,7 +108,7 @@ export default function ConnectWalletButton({
           </div>
           <div className="text-center mt-2 text-green-700 font-semibold">
             {loadingStep === 1 && "Step 1/3: Approving token..."}
-            {loadingStep === 2 && "Step 2/3: Approving USDC..."}
+            {loadingStep === 2 && "Step 2/3: Approving Amount..."}
             {loadingStep === 3 && "Step 3/3: Bridging..."}
           </div>
         </div>
