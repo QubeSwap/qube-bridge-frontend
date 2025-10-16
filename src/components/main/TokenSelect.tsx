@@ -13,7 +13,7 @@ export default function TokenSelect(props: any) {
   const wagmiChainId = useChainId();
 
   // Map wagmi chainId to CHAIN_LIST index
-  const chainIdToIndex: Record<number, number> = { 1: 0, 8453: 1, 56: 2 };
+  const chainIdToIndex: Record<number, number> = { 1: 0, 8453: 1, 56: 2, 9030: 3 };
 
   // Set default for first select to connected chain
   useEffect(() => {
