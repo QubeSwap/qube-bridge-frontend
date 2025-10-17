@@ -4,15 +4,20 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useChainId, useConfig, useWalletClient } from 'wagmi';
 import { cronos, cronosTestnet } from 'viem/chains';
 import { approveAndBridge } from '@/utils/actions';
-import { BNB_ChainId,  
-		 ETHEREUM_ChainId, 
-		 BASE_ChainId, 
-		 QUBETICS_ChainId } from '@/constants';
 
-import { BNB_tokenAddress,  
-		 Ether_tokenAddress,
-		 Base_tokenAddress,		 
-		 Qubetics_tokenAddress } from '@/constants';		 
+import { 
+  BNB_ChainId,  
+  ETHEREUM_ChainId, 
+  BASE_ChainId, 
+  QUBETICS_ChainId 
+} from '@/constants';
+
+import { 
+  BNB_tokenAddress,  
+  Ether_tokenAddress,
+  Base_tokenAddress,		 
+  Tics_tokenAddress 
+} from '@/constants';		 
 
 import { Address, parseUnits } from 'viem';
 import { useState } from 'react';
@@ -20,14 +25,14 @@ import { useState } from 'react';
 export default function ConnectWalletButton({
   swap,
   sender,
-  reciever,
+  receiver,
   amount,
   balance,
   onBridgeFinished
 }: {
   swap: any;
   sender: number;
-  reciever: number;
+  receiver: number;
   amount: number;
   balance: number;
   onBridgeFinished?: () => void;
@@ -38,7 +43,7 @@ export default function ConnectWalletButton({
   const tokenAmount = parseUnits(amount.toString(), 18);
   // if ( amount > 0 ) 
   // else {
-  //   toast.warning("amount invaild")
+  //   toast.warning("amount invalid")
   //   return null;
   // } 
   const config = useConfig()
@@ -65,17 +70,17 @@ export default function ConnectWalletButton({
     }
     else if (sender === 2) {
       fromChainId = BNB_ChainId;
-      tokenAddress = BNB_tokenAddress
+      tokenAddress = BNB_tokenAddress;
     }
 	else if (sender === 3) {
       fromChainId = QUBETICS_ChainId;
-      tokenAddress = Qubetics_tokenAddress
+      tokenAddress = Tics_tokenAddress;
     }
 
-    if (reciever === 0) toChainId = ETHEREUM_ChainId;
-    else if (reciever === 1) toChainId = BASE_ChainId;
-    else if (reciever === 2) toChainId = BNB_ChainId;
-	else if (reciever === 3) toChainId = QUBETICS_ChainId;
+    if (receiver === 0) toChainId = ETHEREUM_ChainId;
+    else if (receiver === 1) toChainId = BASE_ChainId;
+    else if (receiver === 2) toChainId = BNB_ChainId;
+	else if (receiver === 3) toChainId = QUBETICS_ChainId;
 
     if (!tokenAddress) {
       throw new Error("Unsupported srcChainId: missing Bridge contract address");
@@ -146,10 +151,10 @@ export default function ConnectWalletButton({
                     <button
                       onClick={openConnectModal}
                       type="button"
-                      className="rounded-full border-[0.75px] border-[#16a34a] text-[#fff] font-semibold shadow-btn-inner tracking-[0.32px] py-2 px-2 sm:px-4 w-full group relative bg-[#16a34a]"
+                      className="rounded-full border-[0.75px] border-[#000] text-[#fff] font-semibold shadow-btn-inner tracking-[0.32px] py-2 px-2 sm:px-4 w-full group relative bg-[#BD4822] hover:bg-[#292929]"
                       disabled={loadingStep !== null}
                     >
-                      Connect wallet
+                      Connect Wallet
                     </button>
                   );
                 }
@@ -175,7 +180,7 @@ export default function ConnectWalletButton({
                       className="w-full py-3 bg-green-600 text-xl rounded-xl hover:shadow-button hover:shadow-blue-400 text-orange-700 uppercase tracking-widest"
                       disabled={loadingStep !== null}
                     >
-                      Wrong network
+                      Wrong Network
                     </button>
                   );
                 }
