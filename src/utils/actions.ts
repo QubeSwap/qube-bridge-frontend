@@ -1,22 +1,42 @@
+//actions.ts
+
+import { useReadContract } from "wagmi";
 import { writeContract } from '@wagmi/core';
 import { config } from '../config/wagmi';
 import { Address, parseUnits } from 'viem';
 import { waitForTransactionReceipt } from 'wagmi/actions';
 import { toast } from 'react-toastify';
-import { BNB_ChainId, 
-		 BASE_ChainId, 
-		 ETHEREUM_ChainId,  
-		 QUBETICS_ChainId } from '@/constants';
 
-import { BNB_BRIDGE_CONTRACT, 
-		 ETHEREUM_BRIDGE_CONTRACT, 
-		 BASE_BRIDGE_CONTRACT,  
-		 QUBETICS_BRIDGE_CONTRACT } from '@/constants';
+// Import the new ABI
+import { erc20DecimalsAbi } from '@/abis/erc20DecimalsAbi';
 
-import { BNB_USDCAddress, 
-		 Ether_USDCAddress, 
-		 Base_USDCAddress,
-		 Qubetics_USDCAddress } from '@/constants';		 
+import { 
+	BNB_ChainId, 
+	BASE_ChainId, 
+	ETHEREUM_ChainId,  
+	QUBETICS_ChainId 
+} from '@/constants';
+
+import { 
+	BNB_BRIDGE_CONTRACT, 
+	ETHEREUM_BRIDGE_CONTRACT, 
+	BASE_BRIDGE_CONTRACT,  
+	QUBETICS_BRIDGE_CONTRACT 
+} from '@/constants';
+
+import {
+  BNB_tokenAddress,
+  Ether_tokenAddress,
+  Base_tokenAddress,
+  Tics_tokenAddress
+} from '@/constants';
+
+import { 
+	BNB_USDCAddress, 
+	Ether_USDCAddress, 
+	Base_USDCAddress,
+	Qubetics_USDCAddress 
+} from '@/constants';		 
 
 import bridgeContractAbi from '@/abis/bridgeContract.json';
 
@@ -65,13 +85,64 @@ export const approveAndBridge = async (
     if (!BridgeContractAddress) {
       throw new Error("Unsupported srcChainId: missing Bridge contract address");
     }
+	
+	const chainIndexToTokenAddress = [
+		Ether_tokenAddress,
+		Base_tokenAddress,
+		BNB_tokenAddress,
+		Tics_tokenAddress
+	];
+	
+	// NOTE: The decimal value for ETH is 18. This may vary for other tokens.
+	// For a production app, you would need to fetch the decimals for the selected token.
+	//const TOKEN_DECIMALS = 18;
+	
+	// The decimals is fetched from tokenAddress
+	const tokenAddress = chainIndexToTokenAddress[chain];
 
-    
-    const feePercent = 100; // 1% (should fetch from contract in production)
-    let feeAmount;
-    feeAmount = (BigInt(amount) * BigInt(feePercent)) / BigInt(10000);
+	// Fetch token decimals
+	const { data: tokenDecimalsData, isLoading: isDecimalsLoading } = useReadContract({
+		address: tokenAddress,
+		abi: erc20DecimalsAbi,
+		functionName: "decimals",
+		query: { enabled: !!tokenAddress }
+	});
+
+	const [tokenDecimals, setTokenDecimals] = useState<number | undefined>(undefined);
+	useEffect(() => {
+		if (tokenDecimalsData !== undefined) {
+			setTokenDecimals(Number(tokenDecimalsData));
+		}
+	}, [tokenDecimalsData]);
+
+	//const FEE_PERCENT = BigInt(100);
+	const SCALE = BigInt(10000);
+
+	// Fetch the fee percentage from the smart contract
+	const { data: feePercentData, isLoading: isFeeLoading, error: feeError } = useReadContract({
+		address: BridgeContractAddress,
+		abi: bridgeContractAbi,
+		functionName: "feePercent",
+		// Only fetch if a valid contract address exists
+		query: { enabled: !!BridgeContractAddress }
+	});
+
+	const [feePercent, setFeePercent] = useState<bigint>(BigInt(100)); // Default to 1%
+
+	// Update the feePercent state when the contract data is loaded
+	useEffect(() => {
+		if (feePercentData !== undefined) {
+			setFeePercent(feePercentData);
+		}
+	}, [feePercentData]);
+	
+	const bigIntAmount = parseUnits(value, tokenDecimals);
+	let feeAmount;
+	//feeAmount = (bigIntAmount * FEE_PERCENT) / SCALE;
+	// Use the fetched feePercent for calculation
+	feeAmount = (bigIntAmount * feePercent) / SCALE;
 	//
-    const totalAmount = BigInt(amount) + feeAmount; // Only approve the bridge amount, contract will take fee internally
+    const totalAmount = bigIntAmount + feeAmount; // Approve the total amount included fee.
 
     // Step 1: Approve token for bridge contract
     if (onProgress) onProgress(1);
