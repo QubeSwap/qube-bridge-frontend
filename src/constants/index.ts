@@ -34,20 +34,20 @@ export const QUBETICS_ChainId = 9030 // 9029;
 
 export const CHAIN_LIST = [
   {
-    chain: "ETHERIUM",
-    id: 1
-  },
-  {
-    chain: "BASE",
-    id: 8453
-  },
-  {
     chain: "BNB",
     id: 56
   },
   {
     chain: "QUBETICS",
     id: 90230
+  },
+  {
+    chain: "ETHEREUM",
+    id: 1
+  },
+  {
+    chain: "BASE",
+    id: 8453
   }
 ]
 
