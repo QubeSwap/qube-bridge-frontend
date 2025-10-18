@@ -62,7 +62,6 @@ const chainIdToBridgeContractAddress: { [key: number]: Address } = {
 // For a production app, you would need to fetch the decimals for the selected token.
 const TOKEN_DECIMALS = 18;
 
-//const FEE_PERCENT = BigInt(100); // 1% scaled by 100 for BigInt (100 * 100 = 10000)
 const SCALE = BigInt(10000);
 
 export default function SwapSide({ className = "", disabled = false, chain = 0, opChain, setChain, amount, setAmount = () => { }, isFirst = false, balance = "0" }: SwapSideProps) {
@@ -175,11 +174,11 @@ export default function SwapSide({ className = "", disabled = false, chain = 0, 
   };
 
   return (
-    <div className={`bg-[#282f2bb3] px-4 py-9 relative rounded-2xl ${className}`}>
-      <div className="absolute right-4 top-4 z-20">
+    <div className={`bg-[#341309] px-4 py-9 relative rounded-2xl ${className}`}>
+      <div className="absolute right-4 top-2 z-20">
         {
           isFirst && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 text-[#d84f25]">
               Balance: <span>{balance}</span>
               {!disabled && (
                 <button
@@ -198,7 +197,7 @@ export default function SwapSide({ className = "", disabled = false, chain = 0, 
         <div className="flex items-center w-2/3">
           {disabled && isQuoteLoading ? <InputSkeleton /> :
             <input
-              className={`bg-transparent w-full text-right focus:outline-0 font-bold pr-2 text-2xl px-3 h-12 z-20 ${isWarning || !isAbleSwap ? "text-red-400" : "text-white"}`}
+              className={`bg-transparent w-full text-right focus:outline-0 font-bold pr-2 text-2xl px-3 h-9 z-20 ${isWarning || !isAbleSwap ? "text-red-400" : "text-white"}`}
               value={amount ? amount : ""}
               placeholder="0.00"
               type="number"
@@ -208,8 +207,8 @@ export default function SwapSide({ className = "", disabled = false, chain = 0, 
         </div>
       </div>
       {isFirst && (
-        <div className="text-right text-2xs mt-2 text-gray-400">
-		  Total amount to be sent (including fee): {formatUnits(totalWithFee, TOKEN_DECIMALS)}
+        <div className="text-right text-2xs mt-2 text-gray-200">
+		  Total amount to be sent (including 1% fee): {formatUnits(totalWithFee, TOKEN_DECIMALS)}
         </div>
       )}
       <div className="flex justify-end w-1/2 h-full absolute right-0 top-0"></div>
