@@ -14,7 +14,7 @@ function TopBar() {
 		TRADE
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
-		TOKEN ADDRESS
+		PLAY
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
 		DISCOVERY
