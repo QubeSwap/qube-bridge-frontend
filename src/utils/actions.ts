@@ -18,18 +18,30 @@ import {
 } from '@/constants';
 
 import { 
-	BNB_BRIDGE_CONTRACT, 
-	ETHEREUM_BRIDGE_CONTRACT, 
-	BASE_BRIDGE_CONTRACT,  
-	QUBETICS_BRIDGE_CONTRACT 
-} from '@/constants';
+  BNB_BRIDGE_CONTRACT
+} from '@/constants/BNB';
+import {  
+  ETH_BRIDGE_CONTRACT
+} from '@/constants/ETH';
+import {  
+  BASE_BRIDGE_CONTRACT 
+} from '@/constants/BASE';
+import {  
+  TICS_BRIDGE_CONTRACT 
+} from '@/constants/TICS';
 
 import {
-  BNB_tokenAddress,
-  Ether_tokenAddress,
-  Base_tokenAddress,
-  Tics_tokenAddress
-} from '@/constants';
+  BNB_tokenAddress
+} from '@/constants/BNB';
+import {
+  ETH_tokenAddress
+} from '@/constants/ETH';
+import {
+  BASE_tokenAddress
+} from '@/constants/BASE';
+import {
+  TICS_tokenAddress
+} from '@/constants/TICS';
 
 import { 
 	BNB_USDCAddress, 
@@ -75,11 +87,11 @@ export const approveAndBridge = async (
     }
     else if (srcChainId == ETHEREUM_ChainId) {
       console.log("ether contract selected ====")
-      BridgeContractAddress = ETHEREUM_BRIDGE_CONTRACT
+      BridgeContractAddress = ETH_BRIDGE_CONTRACT
     }
 	else if (srcChainId == QUBETICS_ChainId) {
       console.log("qubetics contract selected ====")
-      BridgeContractAddress = QUBETICS_BRIDGE_CONTRACT
+      BridgeContractAddress = TICS_BRIDGE_CONTRACT
     }
 
     if (!BridgeContractAddress) {
@@ -87,10 +99,10 @@ export const approveAndBridge = async (
     }
 	
 	const chainIndexToTokenAddress = [
-		Ether_tokenAddress,
+		ETH_tokenAddress,
 		Base_tokenAddress,
 		BNB_tokenAddress,
-		Tics_tokenAddress
+		TICS_tokenAddress
 	];
 	
 	// NOTE: The decimal value for ETH is 18. This may vary for other tokens.
@@ -286,9 +298,9 @@ function getContractAddress(chainId: number): string | null {
     case BASE_ChainId:
       return BASE_BRIDGE_CONTRACT;
     case ETHEREUM_ChainId:
-      return ETHEREUM_BRIDGE_CONTRACT;
+      return ETH_BRIDGE_CONTRACT;
 	case QUBETICS_ChainId:
-      return QUBETICS_BRIDGE_CONTRACT;
+      return TICS_BRIDGE_CONTRACT;
     default:
       return null;
   }
