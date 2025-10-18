@@ -60,7 +60,7 @@ export default function TokenSelect(props: any) {
   return (
     <div className="relative w-full h-12" ref={newRef}>
       <button
-        className="flex w-full h-full bg-[#1e1e1e] text-white/50 border-[#4a4a4a] border-[1px] rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#62e0ef]"
+        className="flex w-full h-full bg-[#1e1e1e] text-white/75 border-[#4a4a4a] border-[1px] rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#BD4822]"
         onClick={toggleSelect}
         style={{alignItems: "center"}}
         type="button"
@@ -71,17 +71,17 @@ export default function TokenSelect(props: any) {
         <span
           onClick={e => e.stopPropagation()}
         >
-          <ChevronDown className="ml-auto mt-1 text-blue-200" size={15} />
+          <ChevronDown className="ml-auto mt-1 text-[#BD4822]" size={15} />
         </span>
       </button>
       {showMenu && (
-        <div className="absolute w-full top-[110%] left-0 max-h-[300px] bg-primary-gray-200/50 shadow shadow-blue-400 backdrop-blur rounded-lg p-2 z-50 overflow-auto">
+        <div className="absolute w-full top-[110%] left-0 max-h-[300px] bg-primary-[#BD4822] shadow shadow-[#000] backdrop-blur rounded-lg p-2 z-50 overflow-auto">
           {availableChains.map((item, index) => {
             const originalIndex = CHAIN_LIST.findIndex(c => c.id === item.id);
             return (
               <div 
                 key={originalIndex} 
-                className={`flex w-full gap-3 items-center p-3 rounded-lg hover:cursor-pointer text-blue-200 hover:bg-primary-gray-300 text-lg ${animateIndex === originalIndex ? 'animate-pulse' : ''}`}
+                className={`flex w-full gap-3 items-center p-3 rounded-lg hover:cursor-pointer text-white/75 hover:bg-primary-gray-300 text-lg ${animateIndex === originalIndex ? 'animate-pulse' : ''}`}
                 onClick={() => clickHandler(originalIndex)}
               >
                 <div className="">
