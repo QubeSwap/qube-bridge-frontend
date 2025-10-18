@@ -12,12 +12,18 @@ import {
   QUBETICS_ChainId 
 } from '@/constants';
 
-import { 
-  BNB_tokenAddress,  
-  Ether_tokenAddress,
-  Base_tokenAddress,		 
-  Tics_tokenAddress 
-} from '@/constants';		 
+import {
+  BNB_tokenAddress
+} from '@/constants/BNB';
+import {
+  ETH_tokenAddress
+} from '@/constants/ETH';
+import {
+  BASE_tokenAddress
+} from '@/constants/BASE';
+import {
+  TICS_tokenAddress
+} from '@/constants/TICS';		 
 
 import { Address, parseUnits } from 'viem';
 import { useState } from 'react';
@@ -62,7 +68,7 @@ export default function ConnectWalletButton({
 
     if (sender === 0) {
       fromChainId = ETHEREUM_ChainId;
-      tokenAddress = Ether_tokenAddress;
+      tokenAddress = ETH_tokenAddress;
     }
     else if (sender === 1) {
       fromChainId = BASE_ChainId;
@@ -74,7 +80,7 @@ export default function ConnectWalletButton({
     }
 	else if (sender === 3) {
       fromChainId = QUBETICS_ChainId;
-      tokenAddress = Tics_tokenAddress;
+      tokenAddress = TICS_tokenAddress;
     }
 
     if (receiver === 0) toChainId = ETHEREUM_ChainId;
@@ -107,11 +113,11 @@ export default function ConnectWalletButton({
         <div className="fixed top-0 left-0 w-full z-50">
           <div className="h-1 bg-gray-200">
             <div
-              className="h-full bg-green-500 transition-all"
+              className="h-full bg-gray-500 transition-all"
               style={{ width: `${(loadingStep / 3) * 100}%` }}
             />
           </div>
-          <div className="text-center mt-2 text-green-700 font-semibold">
+          <div className="text-center mt-2 text-[#BD4822] font-semibold">
             {loadingStep === 1 && "Step 1/3: Approving token..."}
             {loadingStep === 2 && "Step 2/3: Approving Amount..."}
             {loadingStep === 3 && "Step 3/3: Bridging..."}
@@ -151,7 +157,7 @@ export default function ConnectWalletButton({
                     <button
                       onClick={openConnectModal}
                       type="button"
-                      className="rounded-full border-[0.75px] border-[#000] text-[#fff] font-semibold shadow-btn-inner tracking-[0.32px] py-2 px-2 sm:px-4 w-full group relative bg-[#BD4822] hover:bg-[#292929]"
+                      className="rounded-full border-[0.75px] border-[#000] text-[#fff] text-xl font-semibold shadow-btn-inner tracking-[0.32px] py-3 px-3 sm:px-4 w-full group relative bg-[#BD4822] hover:bg-[#292929]"
                       disabled={loadingStep !== null}
                     >
                       Connect Wallet
@@ -177,7 +183,7 @@ export default function ConnectWalletButton({
                     <button
                       onClick={openChainModal}
                       type="button"
-                      className="w-full py-3 bg-green-600 text-xl rounded-xl hover:shadow-button hover:shadow-blue-400 text-orange-700 uppercase tracking-widest"
+                      className="w-full py-3 bg-gray-600 text-xl rounded-xl hover:shadow-button hover:shadow-blue-200 text-[#BD4822] uppercase tracking-widest"
                       disabled={loadingStep !== null}
                     >
                       Wrong Network
