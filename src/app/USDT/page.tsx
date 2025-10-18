@@ -1,6 +1,6 @@
 'use client'
-
-import SwapSide from "@/components/main/SwapSide"
+//USDT
+import SwapSide from "@/components/main/SwapUSDT"
 import ActionButton from "@/components/ActionButton"
 import AdminPanel from "@/components/AdminPanel"
 import { useCallback, useEffect, useState } from "react"
@@ -138,7 +138,7 @@ export default function Page() {
         onClose={() => setShowAdminPanel(false)} 
       />
 
-      <div className="relative w-[450px] px-5 pt-10 pb-4 mx-4 rounded-3xl backdrop-blur-sm"
+      <div className="relative w-[550px] px-5 pt-10 pb-5 mx-5 rounded-3xl backdrop-blur-sm"
         style={{ background: "radial-gradient(62.63% 73.15% at 5.71% 3.02%, rgba(34, 147, 79, 0.198) 0%, rgba(30, 30, 30, 1) 100%)" }}>
         
         {/* Admin Button */}
@@ -177,11 +177,19 @@ export default function Page() {
         </div>
         <div className="mt-[10px] flex flex-col relative">
           <SwapSide setChain={handleBaseChainChange} chain={baseChain} opChain={quoteChain} amount={baseAmount} setAmount={setBaseAmount} isFirst={true} balance={balance} />
-          <div onClick={exchangeChain} className="w-14 h-14 hover:cursor-pointer grid place-content-center rounded-full bg-[#491c0d] backdrop-blur-sm shadow-3s absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+          <div onClick={exchangeChain} className="w-14 h-14 hover:cursor-pointer grid place-content-center rounded-full bg-gray-600 hover:bg-[#491c0d] shadow-3s absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/3 z-20">
             <Image src="/swap.png" fill alt="" />
           </div>
           <SwapSide className="mt-5" disabled setChain={setQuoteChain} chain={quoteChain} opChain={baseChain} amount={quoteAmount} setAmount={setQuoteAmount} />
         </div>
+		
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  Total amount to be sent (including 1% fee):
+        </div>
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  Total amount to be sent (including 1% fee):
+        </div>
+		
         <div className="mt-4" >
           <ActionButton swap={swap} sender={baseChain} receiver={quoteChain} amount={baseAmount} balance={balance} onBridgeFinished={() => setBaseAmount(0)} />
         </div>
