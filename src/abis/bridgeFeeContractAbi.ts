@@ -1,5 +1,5 @@
 // src/abis/bridgeFeeContractAbi.ts
-export const erc20DecimalsAbi = [
+export const bridgeFeeContractAbi = [
 	{
 		"inputs": [],
 		"name": "feePercent",

@@ -1,9 +1,16 @@
 'use client'
 
+import { useReadContract } from "wagmi";
+import { useEffect, useState } from "react";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useChainId, useConfig, useWalletClient } from 'wagmi';
 import { cronos, cronosTestnet } from 'viem/chains';
 import { approveAndBridge } from '@/utils/actions';
+
+import SwapUSDT from "@/components/main/SwapUSDT"
+import SwapUSDC from "@/components/main/SwapUSDC"
+import SwapPYUSD from "@/components/main/SwapPYUSD"
+import SwapQST from "@/components/main/SwapQST"
 
 import { 
   BNB_ChainId,  
@@ -13,20 +20,33 @@ import {
 } from '@/constants';
 
 import {
-  BNB_tokenAddress
+  BNB_USDT_Address,
+  BNB_QST_Address
 } from '@/constants/BNB';
 import {
-  ETH_tokenAddress
+  ETH_USDT_Address,
+  ETH_USDC_Address,
+  ETH_PYUSD_Address,
+  ETH_QST_Address
 } from '@/constants/ETH';
 import {
-  BASE_tokenAddress
+  BASE_USDT_Address,
+  BASE_USDC_Address
 } from '@/constants/BASE';
 import {
-  TICS_tokenAddress
+  TICS_USDT_Address,
+  TICS_USDC_Address,
+  TICS_PYUSD_Address,
+  TICS_QST_Address
 } from '@/constants/TICS';		 
 
 import { Address, parseUnits } from 'viem';
-import { useState } from 'react';
+// Import the new ABI
+import { erc20DecimalsAbi } from '@/abis/erc20DecimalsAbi';
+
+interface ActionButtonProps {
+  chain?: number;
+}
 
 export default function ConnectWalletButton({
   swap,
@@ -34,6 +54,7 @@ export default function ConnectWalletButton({
   receiver,
   amount,
   balance,
+  chain = 0,
   onBridgeFinished
 }: {
   swap: any;
@@ -43,10 +64,44 @@ export default function ConnectWalletButton({
   balance: number;
   onBridgeFinished?: () => void;
 }) {
+	
+	const chainIndexToTokenAddress = [
+		ETH_USDT_Address,
+		ETH_USDC_Address,
+		ETH_PYUSD_Address,
+		ETH_QST_Address,
+		BNB_USDT_Address,
+		BNB_QST_Address,
+		BASE_USDT_Address,
+		BASE_USDC_Address,
+		TICS_USDT_Address,
+		TICS_USDC_Address,
+		TICS_PYUSD_Address,
+		TICS_QST_Address
+	];
+	
+	// The decimals is fetched from tokenAddress
+  const tokenAddress = chainIndexToTokenAddress[chain];
+
+	// Fetch token decimals
+	const { data: tokenDecimalsData, isLoading: isDecimalsLoading } = useReadContract({
+		address: tokenAddress,
+		abi: erc20DecimalsAbi,
+		functionName: "decimals",
+		query: { enabled: !!tokenAddress }
+	});
+
+	const [tokenDecimals, setTokenDecimals] = useState<number | undefined>(undefined);
+	useEffect(() => {
+		if (tokenDecimalsData !== undefined) {
+			setTokenDecimals(Number(tokenDecimalsData));
+		}
+	}, [tokenDecimalsData]);
+	
   const chainId = useChainId();
   const { data: walletClient } = useWalletClient();
   const [loadingStep, setLoadingStep] = useState<number | null>(null);
-  const tokenAmount = parseUnits(amount.toString(), 18);
+  const tokenAmount = parseUnits(amount.toString(), tokenDecimals);
   // if ( amount > 0 ) 
   // else {
   //   toast.warning("amount invalid")
@@ -65,22 +120,48 @@ export default function ConnectWalletButton({
     let fromChainId = 0;
     let toChainId = 0;
     let tokenAddress: Address | undefined
+	
+	const selectedToken = SwapUSDT || SwapUSDC || SwapPYUSD || SwapQST;
 
     if (sender === 0) {
       fromChainId = ETHEREUM_ChainId;
-      tokenAddress = ETH_tokenAddress;
+		if (slectedToken === SwapUSDT){
+			tokenAddress = ETH_USDT_Address;
+		}else if (selectedToken === SwapUSDC){
+			tokenAddress = ETH_USDC_Address;
+		} else if (selectedToken === SwapPYUSD){
+			tokenAddress = ETH_PYUSD_Address;
+		} else {
+			tokenAddress = ETH_QST_Address;
+		}
     }
     else if (sender === 1) {
       fromChainId = BASE_ChainId;
-      tokenAddress = Base_tokenAddress;
+		if (slectedToken === SwapUSDT){
+			tokenAddress = BASE_USDT_Address;
+		} else {
+			tokenAddress = BASE_USDC_Address;
+		}
     }
     else if (sender === 2) {
       fromChainId = BNB_ChainId;
-      tokenAddress = BNB_tokenAddress;
+		if (slectedToken === SwapUSDT){
+			tokenAddress = BNB_USDT_Address;
+		} else {
+			tokenAddress = BNB_QST_Address;
+		}
     }
 	else if (sender === 3) {
       fromChainId = QUBETICS_ChainId;
-      tokenAddress = TICS_tokenAddress;
+		if (slectedToken === SwapUSDT){
+			tokenAddress = TICS_USDT_Address;
+		}else if (selectedToken === SwapUSDC){
+			tokenAddress = TICS_USDC_Address;
+		} else if (selectedToken === SwapPYUSD){
+			tokenAddress = TICS_PYUSD_Address;
+		} else {
+			tokenAddress = TICS_QST_Address;
+		}
     }
 
     if (receiver === 0) toChainId = ETHEREUM_ChainId;
@@ -157,7 +238,7 @@ export default function ConnectWalletButton({
                     <button
                       onClick={openConnectModal}
                       type="button"
-                      className="rounded-full border-[0.75px] border-[#000] text-[#fff] text-xl font-semibold shadow-btn-inner tracking-[0.32px] py-3 px-3 sm:px-4 w-full group relative bg-[#BD4822] hover:bg-[#292929]"
+                      className="rounded-full border-[0.75px] border-[#000] text-[#d34f26] hover:text-[#fff] text-xl font-semibold shadow-btn-inner tracking-[0.32px] py-3 px-3 sm:px-4 w-full group relative bg-gray-600 hover:bg-[#BD4822]"
                       disabled={loadingStep !== null}
                     >
                       Connect Wallet

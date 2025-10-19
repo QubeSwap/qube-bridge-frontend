@@ -7,9 +7,6 @@ import { Address, parseUnits } from 'viem';
 import { waitForTransactionReceipt } from 'wagmi/actions';
 import { toast } from 'react-toastify';
 
-// Import the new ABI
-import { erc20DecimalsAbi } from '@/abis/erc20DecimalsAbi';
-
 import { 
 	BNB_ChainId, 
 	BASE_ChainId, 
@@ -31,26 +28,30 @@ import {
 } from '@/constants/TICS';
 
 import {
-  BNB_tokenAddress
+  BNB_USDT_Address,
+  BNB_QST_Address
 } from '@/constants/BNB';
 import {
-  ETH_tokenAddress
+  ETH_USDT_Address,
+  ETH_USDC_Address,
+  ETH_PYUSD_Address,
+  ETH_QST_Address
 } from '@/constants/ETH';
 import {
-  BASE_tokenAddress
+  BASE_USDT_Address,
+  BASE_USDC_Address
 } from '@/constants/BASE';
 import {
-  TICS_tokenAddress
+  TICS_USDT_Address,
+  TICS_USDC_Address,
+  TICS_PYUSD_Address,
+  TICS_QST_Address
 } from '@/constants/TICS';
-
-import { 
-	BNB_USDCAddress, 
-	Ether_USDCAddress, 
-	Base_USDCAddress,
-	Qubetics_USDCAddress 
-} from '@/constants';		 
-
+ 
+//
 import bridgeContractAbi from '@/abis/bridgeContract.json';
+// Import the new ABI
+import { erc20DecimalsAbi } from '@/abis/erc20DecimalsAbi';
 
 export interface IVolume {
   user: Address;
@@ -78,7 +79,7 @@ export const approveAndBridge = async (
     // let ApproveUsdcAddress: Address | undefined;
 
     if (srcChainId == BNB_ChainId) {
-      console.log("BSC contract selected ===")
+      console.log("bsc contract selected ===")
       BridgeContractAddress = BNB_BRIDGE_CONTRACT
     }
     else if (srcChainId == BASE_ChainId) {
@@ -99,10 +100,22 @@ export const approveAndBridge = async (
     }
 	
 	const chainIndexToTokenAddress = [
-		ETH_tokenAddress,
-		Base_tokenAddress,
-		BNB_tokenAddress,
-		TICS_tokenAddress
+		//ETHEREUM
+		ETH_USDT_Address,
+		ETH_USDC_Address,
+		ETH_PYUSD_Address,
+		ETH_QST_Address,
+		//BNB
+		BNB_USDT_Address,
+		BNB_QST_Address,
+		//BASE
+		BASE_USDT_Address,
+		BASE_USDC_Address,
+		//QUBETICS
+		TICS_USDT_Address,
+		TICS_USDC_Address,
+		TICS_PYUSD_Address,
+		TICS_QST_Address
 	];
 	
 	// NOTE: The decimal value for ETH is 18. This may vary for other tokens.

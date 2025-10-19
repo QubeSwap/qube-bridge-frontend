@@ -1,4 +1,16 @@
-import { BNB_BRIDGE_CONTRACT, BASE_BRIDGE_CONTRACT, ETHEREUM_BRIDGE_CONTRACT } from '@/constants';
+import { 
+  BNB_BRIDGE_CONTRACT
+} from '@/constants/BNB';
+import {  
+  ETH_BRIDGE_CONTRACT
+} from '@/constants/ETH';
+import {  
+  BASE_BRIDGE_CONTRACT 
+} from '@/constants/BASE';
+import {  
+  TICS_BRIDGE_CONTRACT 
+} from '@/constants/TICS';
+
 import { readContract } from '@wagmi/core';
 import { config } from '../config/wagmi';
 import bridgeContractAbi from '@/abis/bridgeContract.json';
@@ -16,7 +28,7 @@ export const isMultisig = async (userAddress: string, chainId: number): Promise<
         contractAddress = BASE_BRIDGE_CONTRACT;
         break;
       case 1: // ETHEREUM
-        contractAddress = ETHEREUM_BRIDGE_CONTRACT;
+        contractAddress = ETH_BRIDGE_CONTRACT;
         break;
       default:
         return false;
@@ -45,7 +57,7 @@ export const getContractAddress = (chainId: number): string => {
     case 8453: // BASE
       return BASE_BRIDGE_CONTRACT;
     case 1: // ETHEREUM
-      return ETHEREUM_BRIDGE_CONTRACT;
+      return ETH_BRIDGE_CONTRACT;
     default:
       return '';
   }

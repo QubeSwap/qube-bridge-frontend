@@ -34,16 +34,24 @@ import {
 } from '@/constants/TICS';
 
 import {
-  BNB_tokenAddress
+  BNB_USDT_Address,
+  BNB_QST_Address
 } from '@/constants/BNB';
 import {
-  ETH_tokenAddress
+  ETH_USDT_Address,
+  ETH_USDC_Address,
+  ETH_PYUSD_Address,
+  ETH_QST_Address
 } from '@/constants/ETH';
 import {
-  BASE_tokenAddress
+  BASE_USDT_Address,
+  BASE_USDC_Address
 } from '@/constants/BASE';
 import {
-  TICS_tokenAddress
+  TICS_USDT_Address,
+  TICS_USDC_Address,
+  TICS_PYUSD_Address,
+  TICS_QST_Address
 } from '@/constants/TICS';
 
 // Import the new ABI
@@ -78,6 +86,8 @@ const chainIdToBridgeContractAddress: { [key: number]: Address } = {
 
 const SCALE = BigInt(10000);
 
+export const SwapUSDC = SwapSide;
+
 export default function SwapSide({ className = "", disabled = false, chain = 0, opChain, setChain, amount, setAmount = () => { }, isFirst = false, balance = "0" }: SwapSideProps) {
   const config = useConfig();
   const { address } = useAccount();
@@ -86,19 +96,27 @@ export default function SwapSide({ className = "", disabled = false, chain = 0, 
   const [totalWithFee, setTotalWithFee] = useState(BigInt(0));
   const { isSwapped } = useAppContext();
   
-  // Map chain index to chainId and token address
-  const chainIndexToChainId = [
+	// Map chain index to chainId and token address
+	const chainIndexToChainId = [
 		ETHEREUM_ChainId,
 		BASE_ChainId,
 		BNB_ChainId,
 		QUBETICS_ChainId
 	];
 							   
-  const chainIndexToTokenAddress = [
-		ETH_tokenAddress,
-		BASE_tokenAddress,
-		BNB_tokenAddress,
-		TICS_tokenAddress
+	const chainIndexToTokenAddress = [
+		ETH_USDT_Address,
+		ETH_USDC_Address,
+		ETH_PYUSD_Address,
+		ETH_QST_Address,
+		BNB_USDT_Address,
+		BNB_QST_Address,
+		BASE_USDT_Address,
+		BASE_USDC_Address,
+		TICS_USDT_Address,
+		TICS_USDC_Address,
+		TICS_PYUSD_Address,
+		TICS_QST_Address
 	];
   
   // Get the chainId from wagmi, reflecting the user's connected network

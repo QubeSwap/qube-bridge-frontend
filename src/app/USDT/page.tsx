@@ -19,12 +19,26 @@ import {
   QUBETICS_ChainId
 } from '@/constants';
 		
-import {	
-  BNB_tokenAddress, 
-  Ether_tokenAddress, 
-  Base_tokenAddress,
-  Tics_tokenAddress	
-} from '@/constants';		
+import {
+  BNB_USDT_Address,
+  BNB_QST_Address
+} from '@/constants/BNB';
+import {
+  ETH_USDT_Address,
+  ETH_USDC_Address,
+  ETH_PYUSD_Address,
+  ETH_QST_Address
+} from '@/constants/ETH';
+import {
+  BASE_USDT_Address,
+  BASE_USDC_Address
+} from '@/constants/BASE';
+import {
+  TICS_USDT_Address,
+  TICS_USDC_Address,
+  TICS_PYUSD_Address,
+  TICS_QST_Address
+} from '@/constants/TICS';		
 
 export default function Page() {
   const [baseChain, setBaseChain] = useState(0);
@@ -56,17 +70,41 @@ export default function Page() {
 			QUBETICS_ChainId
 		];
       const chainIndexToTokenAddress = [
-			Ether_tokenAddress, 
-			Base_tokenAddress,
-			BNB_tokenAddress,
-			Tics_tokenAddress
+			ETH_USDT_Address,
+			ETH_USDC_Address,
+			ETH_PYUSD_Address,
+			ETH_QST_Address,
+			BNB_USDT_Address,
+			BNB_QST_Address,
+			BASE_USDT_Address,
+			BASE_USDC_Address,
+			TICS_USDT_Address,
+			TICS_USDC_Address,
+			TICS_PYUSD_Address,
+			TICS_QST_Address
 		];
       const selectedChainId = chainIndexToChainId[baseChain];
       const tokenAddress = chainIndexToTokenAddress[baseChain];
       const abi = get_erc20_abi();
+	  
+	  // Fetch token decimals
+	  const { data: tokenDecimalsData, isLoading: isDecimalsLoading } = useReadContract({
+			address: tokenAddress,
+			abi: erc20DecimalsAbi,
+			functionName: "decimals",
+			query: { enabled: !!tokenAddress }
+		});
+
+		const [tokenDecimals, setTokenDecimals] = useState<number | undefined>(undefined);
+		useEffect(() => {
+			if (tokenDecimalsData !== undefined) {
+				setTokenDecimals(Number(tokenDecimalsData));
+			}
+		}, [tokenDecimalsData]);
+	  
       let bal = 0;
       try {
-        const decimals = 18;
+        const decimals = tokenDecimals;
         const { readContract } = await import('@wagmi/core');
         const tokenBalance = await readContract(config, {
           abi,
@@ -184,10 +222,10 @@ export default function Page() {
         </div>
 		
 		<div className="text-left text-2xs mt-2 text-gray-200">
-		  Total amount to be sent (including 1% fee):
+		  BNB | USDT:
         </div>
 		<div className="text-left text-2xs mt-2 text-gray-200">
-		  Total amount to be sent (including 1% fee):
+		  TICS | USDT:
         </div>
 		
         <div className="mt-4" >
