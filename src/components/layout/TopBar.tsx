@@ -11,16 +11,24 @@ function TopBar() {
             <Image src={Logo} alt="Logo" className="flex flex-col" />
       </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
-		TRADE
+		<a className="text-2xl hover:text-[#BD4822]"
+				href="">TRADE
+		</a>
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
-		PLAY
+		<a className="text-2xl hover:text-[#BD4822]"
+				href="">PLAY
+		</a>
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
-		DISCOVERY
+		<a className="text-2xl hover:text-[#BD4822]"
+				href="">DISCOVERY
+		</a>
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
-		ABOUT
+		<a className="text-2xl hover:text-[#BD4822]"
+				href="">ABOUT
+		</a>
 	  </div>
       <div className='h-8'>
         <ConnectButton />
