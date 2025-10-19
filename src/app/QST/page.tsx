@@ -19,12 +19,26 @@ import {
   QUBETICS_ChainId
 } from '@/constants';
 		
-import {	
-  BNB_tokenAddress, 
-  Ether_tokenAddress, 
-  Base_tokenAddress,
-  Tics_tokenAddress	
-} from '@/constants';		
+import {
+  BNB_USDT_Address,
+  BNB_QST_Address
+} from '@/constants/BNB';
+import {
+  ETH_USDT_Address,
+  ETH_USDC_Address,
+  ETH_PYUSD_Address,
+  ETH_QST_Address
+} from '@/constants/ETH';
+import {
+  BASE_USDT_Address,
+  BASE_USDC_Address
+} from '@/constants/BASE';
+import {
+  TICS_USDT_Address,
+  TICS_USDC_Address,
+  TICS_PYUSD_Address,
+  TICS_QST_Address
+} from '@/constants/TICS';
 
 export default function Page() {
   const [baseChain, setBaseChain] = useState(0);
@@ -56,10 +70,18 @@ export default function Page() {
 			QUBETICS_ChainId
 		];
       const chainIndexToTokenAddress = [
-			Ether_tokenAddress, 
-			Base_tokenAddress,
-			BNB_tokenAddress,
-			Tics_tokenAddress
+			ETH_USDT_Address,
+			ETH_USDC_Address,
+			ETH_PYUSD_Address,
+			ETH_QST_Address,
+			BNB_USDT_Address,
+			BNB_QST_Address,
+			BASE_USDT_Address,
+			BASE_USDC_Address,
+			TICS_USDT_Address,
+			TICS_USDC_Address,
+			TICS_PYUSD_Address,
+			TICS_QST_Address
 		];
       const selectedChainId = chainIndexToChainId[baseChain];
       const tokenAddress = chainIndexToTokenAddress[baseChain];
