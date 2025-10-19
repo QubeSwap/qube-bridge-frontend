@@ -1,7 +1,10 @@
-import { BASE_RPC_ENDPOINT, 
-		 BSC_RPC_ENDPOINT, 
-		 ETH_RPC_ENDPOINT, 
-		 TICS_RPC_ENDPOINT } from '@/constants';
+import { 
+	BASE_RPC_ENDPOINT, 
+	BSC_RPC_ENDPOINT, 
+	ETH_RPC_ENDPOINT, 
+	TICS_RPC_ENDPOINT 
+} from '@/constants';
+		 
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { http } from 'viem';
 import { tics } from './ticsMainnet';
