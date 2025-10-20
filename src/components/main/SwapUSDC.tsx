@@ -3,7 +3,7 @@
 
 import { useReadContract } from "wagmi";
 import { useEffect, useState } from "react";
-import TokenSelect from "./TokenSelect";
+import TokenSelect from "./TokenSelectUSDC";
 import { useAccount, useChainId, useConfig } from "wagmi";
 import { useAppContext } from "@/context/AppContext";
 import InputSkeleton from "./InputSkeleton";
