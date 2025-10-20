@@ -86,9 +86,25 @@ export default function Page() {
       const selectedChainId = chainIndexToChainId[baseChain];
       const tokenAddress = chainIndexToTokenAddress[baseChain];
       const abi = get_erc20_abi();
+	  
+	  // Fetch token decimals
+	  const { data: tokenDecimalsData, isLoading: isDecimalsLoading } = useReadContract({
+			address: tokenAddress,
+			abi: erc20DecimalsAbi,
+			functionName: "decimals",
+			query: { enabled: !!tokenAddress }
+		});
+
+		const [tokenDecimals, setTokenDecimals] = useState<number | undefined>(undefined);
+		useEffect(() => {
+			if (tokenDecimalsData !== undefined) {
+				setTokenDecimals(Number(tokenDecimalsData));
+			}
+		}, [tokenDecimalsData]);
+	  
       let bal = 0;
       try {
-        const decimals = 18;
+        const decimals = tokenDecimals;
         const { readContract } = await import('@wagmi/core');
         const tokenBalance = await readContract(config, {
           abi,
@@ -204,6 +220,21 @@ export default function Page() {
           </div>
           <SwapSide className="mt-5" disabled setChain={setQuoteChain} chain={quoteChain} opChain={baseChain} amount={quoteAmount} setAmount={setQuoteAmount} />
         </div>
+		
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  You Are Bridging <span className="text-gray-600">[ QST ]</span> | QubeSwap Token
+        </div>
+		
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  TICS | QST:
+        </div>
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  BNB | QST:
+        </div>
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  ETH | QST:
+        </div>
+		
         <div className="mt-4" >
           <ActionButton swap={swap} sender={baseChain} receiver={quoteChain} amount={baseAmount} balance={balance} onBridgeFinished={() => setBaseAmount(0)} />
         </div>

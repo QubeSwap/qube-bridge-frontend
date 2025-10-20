@@ -3,7 +3,7 @@
 
 import { useReadContract } from "wagmi";
 import { useEffect, useState } from "react";
-import TokenSelect from "./TokenSelect";
+import TokenSelect from "./TokenSelectQST";
 import { useAccount, useChainId, useConfig } from "wagmi";
 import { useAppContext } from "@/context/AppContext";
 import InputSkeleton from "./InputSkeleton";
@@ -79,10 +79,6 @@ const chainIdToBridgeContractAddress: { [key: number]: Address } = {
   [BNB_ChainId]: BNB_BRIDGE_CONTRACT,
   [QUBETICS_ChainId]: TICS_BRIDGE_CONTRACT
 };
-
-// NOTE: The decimal value for ETH is 18. This may vary for other tokens.
-// For a production app, you would need to fetch the decimals for the selected token.
-//const tokenDecimals = 18;
 
 const SCALE = BigInt(10000);
 

@@ -17,7 +17,7 @@ function TopBar() {
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">
 		<a className="text-2xl hover:text-[#BD4822]"
-				href="">PLAY
+				href="">PUBLIC SALE
 		</a>
 	  </div>
 	  <div className="flex justify-center items-left text-2xl font-bold hover:cursor-pointer text-gray-200">

@@ -238,7 +238,7 @@ export default function ConnectWalletButton({
                     <button
                       onClick={openConnectModal}
                       type="button"
-                      className="rounded-full border-[0.75px] border-[#000] text-[#d34f26] hover:text-[#fff] text-xl font-semibold shadow-btn-inner tracking-[0.32px] py-3 px-3 sm:px-4 w-full group relative bg-gray-600 hover:bg-[#BD4822]"
+                      className="rounded-full border-[0.75px] border-[#000] text-[#d34f26] hover:text-[#fff] text-xl font-semibold shadow-btn-inner tracking-[0.32px] py-3 px-3 sm:px-4 w-full group relative bg-[#2b3138] hover:bg-[#BD4822]"
                       disabled={loadingStep !== null}
                     >
                       Connect Wallet

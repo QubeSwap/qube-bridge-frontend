@@ -222,7 +222,17 @@ export default function Page() {
         </div>
 		
 		<div className="text-left text-2xs mt-2 text-gray-200">
+		  You Are Bridging <span className="text-gray-600">[ USDT ]</span> | Tether USDT
+        </div>
+		
+		<div className="text-left text-2xs mt-2 text-gray-200">
 		  BNB | USDT:
+        </div>
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  ETH | USDT:
+        </div>
+		<div className="text-left text-2xs mt-2 text-gray-200">
+		  BASE | USDT:
         </div>
 		<div className="text-left text-2xs mt-2 text-gray-200">
 		  TICS | USDT:
