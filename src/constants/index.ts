@@ -39,4 +39,46 @@ export const CHAIN_LIST = [
   }
 ]
 
+export const CHAIN_LIST_USDC = [
+  {
+    chain: "BASE",
+    id: 8453
+  },
+  {
+    chain: "QUBETICS",
+    id: 90230
+  },
+  {
+    chain: "ETHEREUM",
+    id: 1
+  }
+]
+
+export const CHAIN_LIST_PYUSD = [
+  {
+    chain: "ETHEREUM",
+    id: 1
+  },
+  {
+    chain: "QUBETICS",
+    id: 90230
+  }
+]
+
+export const CHAIN_LIST_QST = [
+  {
+    chain: "QUBETICS",
+    id: 90230
+  },
+  {
+    chain: "BNB",
+    id: 56
+  },
+  {
+    chain: "ETHEREUM",
+    id: 1
+  }
+  
+]
+
 export const ADMIN_WALLET_ADDRESS = process.env.NEXT_PUBLIC_MAIN_WALLET_ADDRESS || "" ;
