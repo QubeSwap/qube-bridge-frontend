@@ -10,13 +10,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProvider } from "@/context/AppContext";
 
-const TopBarDynamic = dynamic(() => import('@/components/layout/TopBar'), { ssr: false })
+// Import the new client-side wrapper
+import { ClientTopBar } from "@/components/ClientTopBar";
+
+//const TopBarDynamic = dynamic(() => import('@/components/layout/TopBar'), { ssr: false })
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Qube Bridge",
-  description: "QubeSwap | Bridge",
+  title: "Qube Bridge | From QubeSwap",
+  description: "Bridge Tokens on QubeSwap Dex",
 };
 
 function RootLayout({ children }: { children: React.ReactNode }) {
@@ -25,7 +28,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       <body className="relative">
         <Providers>
           <AppProvider>
-            <TopBarDynamic />
+            <ClientTopBar />
             {children}
             <ToastContainer
               position="bottom-right"
